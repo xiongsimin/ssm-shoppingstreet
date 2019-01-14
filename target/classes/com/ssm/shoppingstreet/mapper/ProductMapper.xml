@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.shoppingstreet.dao.ProductDao">
+	<!-- <insert id="addUser" useGeneratedKeys="true" keyProperty="id"> insert 
+		into user (name,password,email,phone,inviter_name,inviter_id) values(#{name},#{password},#{email},#{phone},#{inviterName},#{inviterId}) 
+		</insert> -->
+	<select id="searchProducts" resultType="com.ssm.shoppingstreet.modal.Product">
+		select * from product
+		where product_name like concat('%',#{key},'%')
+	</select>
+	<select id="findProductById" resultType="com.ssm.shoppingstreet.modal.Product">
+		select * from product
+		where id=#{productId}
+	</select>
+</mapper>

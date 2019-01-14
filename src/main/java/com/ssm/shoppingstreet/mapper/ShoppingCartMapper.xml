@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.shoppingstreet.dao.ShoppingCartDao">
+	<insert id="addShoppingCart" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into shopping_cart
+		(user_id,product_id,time,num)
+		values(#{userId},#{productId},#{time},#{num})
+	</insert>
+	<select id="findShoppingCartByUserId" resultType="com.ssm.shoppingstreet.modal.ShoppingCart">
+		select * from
+		shopping_cart,product where shopping_cart.user_id=#{userId} and
+		shopping_cart.product_id=product.id
+	</select>
+	<select id="findShoppingCartByUserIdAndProductId" resultType="com.ssm.shoppingstreet.modal.ShoppingCart">
+		select * from shopping_cart where user_id=#{userId} and
+		product_id=#{productId}
+	</select>
+
+	<update id="updateShoppingCart">
+		update shopping_cart
+		set num=#{num}
+		where
+		user_id=#{userId} and product_id=#{productId}
+	</update>
+	<delete id="delShoppingCart">
+		delete from shopping_cart where
+		id=#{shoppingCartId}
+	</delete>
+	<delete id="clearShoppingCart">
+		delete from shopping_cart where
+		user_id=#{userId}
+	</delete>
+</mapper>

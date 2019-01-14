@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.shoppingstreet.dao.AddressDao">
+	<select id="findAddressByUserId" resultType="com.ssm.shoppingstreet.modal.Address">
+		select * from
+		address where user_id=#{userId} order by is_default desc
+	</select>
+	<select id="findDefaultAddress" resultType="com.ssm.shoppingstreet.modal.Address">
+		select * from address
+		where user_id=#{userId} and is_default=1
+	</select>
+	<insert id="addAddress" useGeneratedKeys="true" keyProperty="id">
+		insert into address
+		(user_id,title,consignee_name,area,specified_address,consignee_mobile_phone,consignee_phone,consignee_email,is_default)
+		values(#{userId},#{title},#{consigneeName},#{area},#{specifiedAddress},#{consigneeMobilePhone},#{consigneePhone},#{consigneeEmail},#{isDefault})
+	</insert>
+	<update id="unSetDefault">
+		update address set is_default=0 where
+		user_id=#{userId}
+	</update>
+	<update id="setDefault">
+		update address set is_default=1 where id=#{addressId}
+	</update>
+	<delete id="delAddress">
+		delete from address where id=#{addressId}
+	</delete>
+</mapper>

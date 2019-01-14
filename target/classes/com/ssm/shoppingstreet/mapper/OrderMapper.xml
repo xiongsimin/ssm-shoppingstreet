@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.shoppingstreet.dao.OrderDao">
+	<insert id="addOrder" useGeneratedKeys="true" keyProperty="id">
+		insert into `order`<!-- 注意此处和status前有个倒引号！！！用来转译关键字 -->
+		(user_id,number,order_name,time,`status`,address_id,pay_method,sum_price)
+		values(#{userId},#{number},#{orderName},#{time},#{status},#{addressId},#{payMethod},#{sumPrice})
+	</insert>
+	<update id="confirmOrder">
+		update `order` set `status`=#{status} where
+		id=#{orderId}
+	</update>
+	<select id="findOrderByUserIdAndNumber" resultType="com.ssm.shoppingstreet.modal.Order">
+		select * from
+		`order` where user_id=#{userId} and number=#{number}
+	</select>
+	<select id="findOrderByOrderId" resultType="com.ssm.shoppingstreet.modal.Order">
+		select * from
+		`order`,address where `order`.id=#{orderId} and
+		address.id=`order`.address_id
+	</select>
+	<select id="findOrdersByUserId" resultType="com.ssm.shoppingstreet.modal.Order">
+		select * from `order`
+		where user_id=#{userId}
+	</select>
+	<delete id="delOrder">
+		delete from `order` where id=#{orderId}
+	</delete>
+</mapper>
